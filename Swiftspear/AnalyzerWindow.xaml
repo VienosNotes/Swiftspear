@@ -27,9 +27,9 @@
         <Style x:Key="FlatButtonStyle" TargetType="Label">
             <Setter Property="Foreground" Value="Gray"></Setter>
         </Style>
-        <conv:RecodingButtonColorConverter x:Key="RecordingButtonColorConverter"></conv:RecodingButtonColorConverter>
+        <conv:PlayButtonColorConverter x:Key="PlayButtonColorConverter"></conv:PlayButtonColorConverter>
     </Window.Resources>
-    <Grid d:DataContext="{x:Null}">
+    <Grid>
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="50"></RowDefinition>
@@ -38,46 +38,37 @@
                 <RowDefinition Height="*"></RowDefinition>
             </Grid.RowDefinitions>
             <DockPanel Margin="5" Grid.Row="0">
-                <Label DockPanel.Dock="Left" HorizontalAlignment="Left" Style="{StaticResource FlatButtonStyle}"
-                       Height="25" Width="60" BorderBrush="Gray" BorderThickness="1" Margin="0,0,5,0" Padding="0,0,0,1"
-                       Content="Load File" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="MouseLeftButtonDown">
-                            <i:InvokeCommandAction Command="{Binding ToggleRecodingStateCommand}"></i:InvokeCommandAction>
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
-                </Label>
-                <StackPanel Orientation="Horizontal">
+                <StackPanel Orientation="Horizontal" DockPanel.Dock="Left">
                     <RadioButton GroupName="AnalyzeType" 
                                  VerticalAlignment="Center" 
                                  Width="50"
                                  TextBlock.Foreground="Gray">Total</RadioButton>
                     <RadioButton GroupName="AnalyzeType"
                                  VerticalAlignment="Center"
-                                 Width="100"
+                                 Width="50"
                                  TextBlock.Foreground="Gray">Spot</RadioButton>
                 </StackPanel>
-                <Slider DockPanel.Dock="Right" VerticalAlignment="Center"></Slider>
-                <!--<Label DockPanel.Dock="Right" HorizontalAlignment="Right" 
-                       Style="{Binding IsRecording, Converter={StaticResource RecordingButtonColorConverter}}" 
-                       Height="25" Width="40" BorderBrush="Gray" BorderThickness="1" Margin="0,0,5,0" Padding="0,0,0,1"
-                       HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="REC">
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="MouseLeftButtonDown">
-                            <i:InvokeCommandAction Command="{Binding ToggleRecodingStateCommand}"></i:InvokeCommandAction>
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
-                </Label>
-                <Label DockPanel.Dock="Right" HorizontalAlignment="Right" 
-                       Style="{Binding IsRecording, Converter={StaticResource RecordingButtonColorConverter}}" 
-                       Height="25" Width="60" BorderBrush="Gray" BorderThickness="1" Margin="0,0,5,0" Padding="0,0,0,1"
-                       HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Content="Analyze">
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="MouseLeftButtonDown">
-                            <i:InvokeCommandAction Command="{Binding ToggleRecodingStateCommand}"></i:InvokeCommandAction>
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
-                </Label>-->
+                <DockPanel DockPanel.Dock="Right">
+                    <Label DockPanel.Dock="Left" Style="{Binding IsPlaying, Converter={StaticResource PlayButtonColorConverter}}"
+                       Height="25" Width="25" BorderBrush="Gray" BorderThickness="1" Margin="0,0,5,0" Padding="0,0,0,1"
+                       Content="▶" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="MouseLeftButtonDown">
+                                <i:InvokeCommandAction Command="{Binding TogglePlayingStateCommand}"></i:InvokeCommandAction>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </Label>
+                    <Label DockPanel.Dock="Right" Style="{Binding IsPlaying, Converter={StaticResource PlayButtonColorConverter}}"
+                       Height="25" Width="25" BorderBrush="Gray" BorderThickness="1" Margin="0,0,5,0" Padding="0,0,0,1"
+                       Content="🔊" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="MouseLeftButtonDown">
+                                <i:InvokeCommandAction Command="{Binding TogglePlayingStateCommand}"></i:InvokeCommandAction>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </Label>
+                    <Slider DockPanel.Dock="Right" VerticalAlignment="Center"></Slider>
+                </DockPanel>
             </DockPanel>
             <StackPanel Grid.Row="1" Orientation="Vertical">
                 <ProgressBar Value="{Binding Volume, Mode=OneWay}" Minimum="0" Maximum="65536" Height="20" Margin="5"></ProgressBar>
