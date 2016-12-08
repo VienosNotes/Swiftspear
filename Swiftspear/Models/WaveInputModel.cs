@@ -68,11 +68,6 @@ namespace Swiftspear.Models
         /// <exception cref="InvalidOperationException">利用可能な音声入力デバイスが見つかりません。</exception>
         public WaveInputModel()
         {
-            //if (WaveIn.DeviceCount == 0)
-            //{
-            //    throw new InvalidOperationException("利用可能な音声入力デバイスが見つかりません。");
-            //}
-
             _inputDevices.Add("Microphone OFF");
 
             foreach (var i in Enumerable.Range(0, WaveIn.DeviceCount))
@@ -198,6 +193,11 @@ namespace Swiftspear.Models
         /// </summary>
         public virtual void StartRecordingToFile()
         {
+            if (_currentWaveIn == null)
+            {
+                return;
+            }
+
             StopRecordingToFile();
             IsRecording = true;
 

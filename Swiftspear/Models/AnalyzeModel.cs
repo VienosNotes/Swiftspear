@@ -12,7 +12,7 @@ namespace Swiftspear.Models
     {
         public string FileName { get; private set; }
         private readonly IEnumerable<int> _empty = new List<int>();
-
+        private readonly byte[] _buf = new byte[8192 * 2];
         private bool _isPlaying;
         public bool IsPlaying
         {
@@ -44,7 +44,6 @@ namespace Swiftspear.Models
                 {
                     _position = value;
                     RaisePropertyChanged();
-                    RaisePropertyChanged(nameof(Current));
                 }
             }
         }
@@ -56,11 +55,11 @@ namespace Swiftspear.Models
         {
             get
             {
-                return (int)(_reader.Length / (2 * 8192));
+                return (int)(_reader.Length);
             }
         }
 
-        private AudioFileReader _reader;
+        private WaveFileReader _reader;
 
 
         /// <summary>
@@ -75,10 +74,10 @@ namespace Swiftspear.Models
                     return _empty;
                 }
 
-                var buf = new byte[8192*2];
-
-                _reader.Read(buf, Position * 2 * 8192, 8192 * 2);
-                return AnalyzeUtils.AppendBytes(buf);
+                int offset = Position;
+                _reader.Position = offset;
+                _reader.Read(_buf, 0, 8192 * 2);
+                return AnalyzeUtils.AppendBytesWave(_buf);
             }
         }
 
@@ -96,8 +95,7 @@ namespace Swiftspear.Models
         public AnalyzeModel(string fileName)
         {
             FileName = fileName;
-            _reader = new AudioFileReader(fileName);
-
+            _reader = new WaveFileReader(fileName);
         }
     }
 }

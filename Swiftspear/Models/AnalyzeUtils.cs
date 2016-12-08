@@ -54,5 +54,27 @@ namespace Swiftspear.Models
                 yield return sample;
             }
         }
+
+        /// <summary>
+        /// byte2つ（16bit）のサンプル列をintの列に変換します。
+        /// </summary>
+        /// <param name="bytes"></param>
+        /// <returns></returns>
+        public static IEnumerable<int> AppendBytesWave(IEnumerable<byte> bytes)
+        {
+            if (bytes == null)
+            {
+                yield break;
+            }
+
+            var buf = bytes.ToArray();
+            var len = buf.Count();
+
+            for (var index = 0; index < len; index += 2)
+            {
+                var sample = (short)((buf[index + 1] << 8) | buf[index + 0]);
+                yield return sample;
+            }
+        }
     }
 }

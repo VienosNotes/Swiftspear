@@ -40,7 +40,7 @@ namespace Swiftspear.ViewModels
 
         public IEnumerable<DataPoint> FrequencyDomain
         {
-            get { return _model.FreqSpectrum?.Select(t => new DataPoint(t.Item1 * 10, t.Item2 / 1000)); }
+            get { return _model.FreqSpectrum?.Select(t => new DataPoint(t.Item1, t.Item2 / 10000)); }
         }
 
         public int Position
@@ -51,6 +51,7 @@ namespace Swiftspear.ViewModels
             }
             set
             {
+                Console.WriteLine(value);
                 _model.Position = value;
             }
         }
@@ -63,6 +64,30 @@ namespace Swiftspear.ViewModels
         public AnalyzerWindowViewModel(string fileName)
         {
             _model = new AnalyzeModel(fileName);
+            _model.PropertyChanged += OnModelPropertyChanged;
+        }
+
+
+        /// <summary>
+        /// Modelの変更通知イベントを処理します。
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnModelPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            switch (e.PropertyName)
+            {
+                case nameof(_model.Position):
+                    RaisePropertyChanged(nameof(Position));
+                    RaisePropertyChanged(nameof(TimeDomain));
+                    RaisePropertyChanged(nameof(FrequencyDomain));
+                    break;
+                case nameof(_model.IsPlaying):
+                    RaisePropertyChanged(nameof(IsPlaying));
+                    break;
+                default:
+                    throw new ArgumentException();
+            }
         }
     }
 }
