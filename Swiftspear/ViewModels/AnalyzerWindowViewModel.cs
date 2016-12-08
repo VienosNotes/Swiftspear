@@ -35,12 +35,12 @@ namespace Swiftspear.ViewModels
 
         public IEnumerable<DataPoint> TimeDomain
         {
-            get { return null; } // _model.LatestReceived?.Select((p, idx) => new DataPoint(idx, p)); }
+            get { return _model.Current?.Select((p, idx) => new DataPoint(idx, p)); }
         }
 
         public IEnumerable<DataPoint> FrequencyDomain
         {
-            get { return null; } // _model.FreqSpectrum.Select(t => new DataPoint(t.Item1 * 10, t.Item2 / 1000)); }
+            get { return _model.FreqSpectrum?.Select(t => new DataPoint(t.Item1 * 10, t.Item2 / 1000)); }
         }
 
         public int Position

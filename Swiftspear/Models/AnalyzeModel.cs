@@ -11,6 +11,7 @@ namespace Swiftspear.Models
     class AnalyzeModel : ViewModel
     {
         public string FileName { get; private set; }
+        private readonly IEnumerable<int> _empty = new List<int>();
 
         private bool _isPlaying;
         public bool IsPlaying
@@ -43,6 +44,7 @@ namespace Swiftspear.Models
                 {
                     _position = value;
                     RaisePropertyChanged();
+                    RaisePropertyChanged(nameof(Current));
                 }
             }
         }
@@ -59,6 +61,37 @@ namespace Swiftspear.Models
         }
 
         private AudioFileReader _reader;
+
+
+        /// <summary>
+        /// ポジション位置の音声データを取得します。
+        /// </summary>
+        public IEnumerable<int> Current
+        {
+            get
+            {
+                if (_reader == null)
+                {
+                    return _empty;
+                }
+
+                var buf = new byte[8192*2];
+
+                _reader.Read(buf, Position * 2 * 8192, 8192 * 2);
+                return AnalyzeUtils.AppendBytes(buf);
+            }
+        }
+
+        /// <summary>
+        /// 周波数とその成分量の組を列挙します。
+        /// </summary>
+        public IEnumerable<Tuple<double, double>> FreqSpectrum
+        {
+            get
+            {
+                return AnalyzeUtils.GetFreqSpectrum(Current);
+            }
+        }
 
         public AnalyzeModel(string fileName)
         {

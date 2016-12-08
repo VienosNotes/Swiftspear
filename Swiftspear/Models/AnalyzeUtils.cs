@@ -33,6 +33,11 @@ namespace Swiftspear.Models
             return points;
         }
 
+        /// <summary>
+        /// byte2つ（16bit）のサンプル列をintの列に変換します。
+        /// </summary>
+        /// <param name="bytes"></param>
+        /// <returns></returns>
         public static IEnumerable<int> AppendBytes(IEnumerable<byte> bytes)
         {
             if (bytes == null)

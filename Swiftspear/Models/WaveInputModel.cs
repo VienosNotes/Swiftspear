@@ -68,10 +68,12 @@ namespace Swiftspear.Models
         /// <exception cref="InvalidOperationException">利用可能な音声入力デバイスが見つかりません。</exception>
         public WaveInputModel()
         {
-            if (WaveIn.DeviceCount == 0)
-            {
-                throw new InvalidOperationException("利用可能な音声入力デバイスが見つかりません。");
-            }
+            //if (WaveIn.DeviceCount == 0)
+            //{
+            //    throw new InvalidOperationException("利用可能な音声入力デバイスが見つかりません。");
+            //}
+
+            _inputDevices.Add("Microphone OFF");
 
             foreach (var i in Enumerable.Range(0, WaveIn.DeviceCount))
             {
@@ -80,7 +82,6 @@ namespace Swiftspear.Models
             }
 
             CurrentDeviceId = 0;
-            SetWaveIn(0);
         }
 
         /// <summary>
@@ -108,19 +109,7 @@ namespace Swiftspear.Models
         {
             get
             {
-                if (_latestReceivedRaw == null)
-                {
-                    yield break;
-                }
-
-                var len = _latestReceivedRaw.Count();
-                var buf = _latestReceivedRaw.ToArray();
-
-                for (var index = 0; index < len; index += 2)
-                {
-                    var sample = (short)((buf[index + 1] << 8) | buf[index + 0]);
-                    yield return sample;
-                }
+                return AnalyzeUtils.AppendBytes(_latestReceivedRaw);
             }
         }
 
@@ -151,9 +140,15 @@ namespace Swiftspear.Models
             _currentWaveIn?.StopRecording();
             _currentWaveIn?.Dispose();
 
+            if (id == 0)
+            {
+                _currentWaveIn = null;
+                return;
+            }
+
             _currentWaveIn = new WaveIn
             {
-                DeviceNumber = id,
+                DeviceNumber = id-1,
                 WaveFormat = new WaveFormat(freqency, bits, channels)
             };
 
