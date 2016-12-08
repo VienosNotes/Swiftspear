@@ -131,31 +131,11 @@ namespace Swiftspear.Models
         {
             get
             {
-                return GetFreqSpectrum(LatestReceived);
+                return AnalyzeUtils.GetFreqSpectrum(LatestReceived);
             }
         }
 
-        /// <summary>
-        /// 離散的な音声データを受け取り、フーリエ変換した結果を返します。窓関数にはハミング窓を用います。
-        /// </summary>
-        /// <param name="latestReceived">1要素1サンプルの音声データ。要素数が2の累乗個である必要があります。</param>
-        /// <returns>フーリエ変換によって得られた周波数（0.1Hz刻み）とその周波数成分の組を列挙します。</returns>
-        private static IEnumerable<Tuple<double, double>> GetFreqSpectrum(IEnumerable<int> latestReceived)
-        {
-            if (!latestReceived.Any())
-            {
-                return new List<Tuple<double, double>>();
-            }
 
-            var buf = latestReceived.ToArray();
-            var window = Window.Hamming(buf.Length);
-            var complex = buf.Select((v, i) => new Complex(v * window[i], 0.0)).ToArray();
-            Fourier.Forward(complex, FourierOptions.Matlab);
-            var points = complex.Take(complex.Length / 2).Select((v, i) =>
-                  Tuple.Create<double, double>(i, Math.Sqrt(v.Real * v.Real + v.Imaginary * v.Imaginary))
-              );
-            return points;
-        }
 
         private IEnumerable<byte> _latestReceivedRaw;
 

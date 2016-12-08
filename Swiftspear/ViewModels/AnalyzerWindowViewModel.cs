@@ -15,15 +15,13 @@ namespace Swiftspear.ViewModels
 {
     class AnalyzerWindowViewModel : ViewModel
     {
-        private readonly AnalyzeModel _model = new AnalyzeModel();
-
-        private readonly string _fileName;
+        private readonly AnalyzeModel _model;
         
         public string Title
         {
             get
             {
-                return $"Analyzer - {Path.GetFileName(_fileName)}";
+                return $"Analyzer - {Path.GetFileName(_model.FileName)}";
             }
         }
 
@@ -45,11 +43,26 @@ namespace Swiftspear.ViewModels
             get { return null; } // _model.FreqSpectrum.Select(t => new DataPoint(t.Item1 * 10, t.Item2 / 1000)); }
         }
 
-        public AnalyzerWindowViewModel(string fileName)
+        public int Position
         {
-            _fileName = fileName;               
+            get
+            {
+                return _model.Position;
+            }
+            set
+            {
+                _model.Position = value;
+            }
         }
 
+        public int MaxPosition
+        {
+            get { return _model.Length; }
+        }
 
+        public AnalyzerWindowViewModel(string fileName)
+        {
+            _model = new AnalyzeModel(fileName);
+        }
     }
 }

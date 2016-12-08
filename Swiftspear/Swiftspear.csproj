@@ -103,6 +103,7 @@
     </Compile>
     <Compile Include="Converters\PlayButtonColorConverter.cs" />
     <Compile Include="Models\AnalyzeModel.cs" />
+    <Compile Include="Models\AnalyzeUtils.cs" />
     <Compile Include="ViewModels\AnalyzerWindowViewModel.cs" />
     <Compile Include="Commands\OpenAnalyzerWindowCommand.cs" />
     <Compile Include="Converters\RecodingButtonColorConverter.cs" />

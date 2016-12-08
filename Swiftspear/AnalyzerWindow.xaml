@@ -67,7 +67,7 @@
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                     </Label>
-                    <Slider DockPanel.Dock="Right" VerticalAlignment="Center"></Slider>
+                    <Slider DockPanel.Dock="Right" VerticalAlignment="Center" Value="{Binding Position, Mode=TwoWay}" Maximum="{Binding MaxPosition}"></Slider>
                 </DockPanel>
             </DockPanel>
             <StackPanel Grid.Row="1" Orientation="Vertical">
