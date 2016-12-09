@@ -38,7 +38,7 @@
                 <RowDefinition Height="*"></RowDefinition>
             </Grid.RowDefinitions>
             <DockPanel Margin="5" Grid.Row="0">
-                <StackPanel Orientation="Horizontal" DockPanel.Dock="Left">
+                <StackPanel Orientation="Horizontal" DockPanel.Dock="Left" Visibility="Collapsed">
                     <RadioButton GroupName="AnalyzeType" 
                                  VerticalAlignment="Center" 
                                  Width="50"
@@ -60,7 +60,7 @@
                     </Label>
                     <Label DockPanel.Dock="Right" Style="{Binding IsPlaying, Converter={StaticResource PlayButtonColorConverter}}"
                        Height="25" Width="25" BorderBrush="Gray" BorderThickness="1" Margin="0,0,5,0" Padding="0,0,0,1"
-                       Content="🔊" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" >
+                       Content="🔊" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Visibility="Collapsed">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="MouseLeftButtonDown">
                                 <i:InvokeCommandAction Command="{Binding TogglePlayingStateCommand}"></i:InvokeCommandAction>
@@ -69,7 +69,7 @@
                     </Label>
                     <Slider DockPanel.Dock="Right" VerticalAlignment="Center" 
                             Value="{Binding Position, Mode=TwoWay}" Maximum="{Binding MaxPosition}"
-                            TickPlacement="None"
+                            TickPlacement="None" Style="{DynamicResource FlatSliderStyle}"
                             ></Slider>
                 </DockPanel>
             </DockPanel>
@@ -82,18 +82,19 @@
                     </oxy:LineSeries>
                 </oxy:Plot.Series>
                 <oxy:Plot.Axes>
-                    <oxy:LinearAxis Position="Left" Maximum="32768" Minimum="-32768" Style="{StaticResource AxisStyle}"></oxy:LinearAxis>
-                    <oxy:LinearAxis Position="Bottom" Style="{StaticResource AxisStyle}" Minimum="0" Maximum="850"></oxy:LinearAxis>
+                    <oxy:LinearAxis Position="Left" Maximum="32768" Minimum="-32768" Style="{StaticResource AxisStyle}" IsZoomEnabled="False" IsPanEnabled="False"></oxy:LinearAxis>
+                    <oxy:LinearAxis Position="Bottom" Style="{StaticResource AxisStyle}" Minimum="0" Maximum="850" AbsoluteMinimum="0" AbsoluteMaximum="8192"></oxy:LinearAxis>
                 </oxy:Plot.Axes>
             </oxy:Plot>
-            <oxy:Plot Grid.Row="3" Margin="5" Style="{StaticResource PlotStyle}" LegendTitle="Frequency Domain">
+            <oxy:Plot Grid.Row="3" Margin="5" Style="{StaticResource PlotStyle}" LegendTitle="Frequency Domain" x:Name="FreqPlot">
                 <oxy:Plot.Series>
                     <oxy:LineSeries ItemsSource="{Binding FrequencyDomain}" Color="Orange">
                     </oxy:LineSeries>
                 </oxy:Plot.Series>
                 <oxy:Plot.Axes>
-                    <oxy:LinearAxis Position="Left" Maximum="1000" Minimum="-10" Style="{StaticResource AxisStyle}"></oxy:LinearAxis>
-                    <oxy:LinearAxis Position="Bottom" Style="{StaticResource AxisStyle}"></oxy:LinearAxis>
+                    <oxy:LinearAxis Position="Left" Maximum="1000" Minimum="-10" Style="{StaticResource AxisStyle}"  IsZoomEnabled="False" IsPanEnabled="False"
+                                     AbsoluteMinimum="-10" AbsoluteMaximum="100000"></oxy:LinearAxis>
+                    <oxy:LinearAxis Position="Bottom" Style="{StaticResource AxisStyle}" IsZoomEnabled="False" IsPanEnabled="False" x:Name="FreqAxisY" AbsoluteMinimum="-10"></oxy:LinearAxis>
                 </oxy:Plot.Axes>
             </oxy:Plot>
         </Grid>

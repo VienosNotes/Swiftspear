@@ -55,7 +55,7 @@ namespace Swiftspear.Models
         {
             get
             {
-                return (int)(_reader.Length);
+                return (int)(_reader.Length - 8192*2);
             }
         }
 

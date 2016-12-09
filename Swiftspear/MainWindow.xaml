@@ -69,8 +69,8 @@
                     </oxy:LineSeries>
                 </oxy:Plot.Series>
                 <oxy:Plot.Axes>
-                    <oxy:LinearAxis Position="Left" Maximum="32768" Minimum="-32768" Style="{StaticResource AxisStyle}"></oxy:LinearAxis>
-                    <oxy:LinearAxis Position="Bottom" Style="{StaticResource AxisStyle}"></oxy:LinearAxis>
+                    <oxy:LinearAxis Position="Left" Maximum="32768" Minimum="-32768" Style="{StaticResource AxisStyle}" IsZoomEnabled="False" IsPanEnabled="False"></oxy:LinearAxis>
+                    <oxy:LinearAxis Position="Bottom" Style="{StaticResource AxisStyle}" IsZoomEnabled="False" IsPanEnabled="False"></oxy:LinearAxis>
                 </oxy:Plot.Axes>
             </oxy:Plot>
             <oxy:Plot Grid.Row="3" Margin="5" Style="{StaticResource PlotStyle}" LegendTitle="Frequency Domain">
@@ -79,8 +79,8 @@
                     </oxy:LineSeries>
                 </oxy:Plot.Series>
                 <oxy:Plot.Axes>
-                    <oxy:LinearAxis Position="Left" Maximum="1000" Minimum="-10" Style="{StaticResource AxisStyle}"></oxy:LinearAxis>
-                    <oxy:LinearAxis Position="Bottom" Style="{StaticResource AxisStyle}"></oxy:LinearAxis>
+                    <oxy:LinearAxis Position="Left" Maximum="1000" Minimum="-10" Style="{StaticResource AxisStyle}" IsZoomEnabled="False" IsPanEnabled="False"></oxy:LinearAxis>
+                    <oxy:LinearAxis Position="Bottom" Style="{StaticResource AxisStyle}" IsZoomEnabled="False" IsPanEnabled="False"></oxy:LinearAxis>
                 </oxy:Plot.Axes>
             </oxy:Plot>
         </Grid>

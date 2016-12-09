@@ -1,4 +1,6 @@
-﻿using Swiftspear.ViewModels;
+﻿
+using OxyPlot.Wpf;
+using Swiftspear.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,5 +27,6 @@ namespace Swiftspear
             InitializeComponent();
             DataContext = new AnalyzerWindowViewModel(fileName);
         }
+
     }
 }
